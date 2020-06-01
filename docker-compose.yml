@@ -1,0 +1,10 @@
+version: '3'
+services:
+  backend:
+    ports:
+      - "8080:8080"
+    image: "tobiaslocker/simple-dockerized-flask-backend:v0.1"
+  frontend:
+    ports:
+      - "80:80"
+    image: "tobiaslocker/simple-dockerized-react-frontend:v0.1"
