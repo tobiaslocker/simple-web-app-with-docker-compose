@@ -1,23 +1,20 @@
 version: '3'
 services:
-  myapp-backend:
-    image: "tobiaslocker/simple-dockerized-flask-backend:v0.1"
+  backend:
+    image: "${BACKEND_IMAGE}"
     environment:
-      - "VIRTUAL_HOST=backend.decent.sh"
-      - "VIRTUAL_PORT=8080"
-    ports:
-      - "8080:80"
-  myapp-frontend:
-    image: "tobiaslocker/simple-dockerized-react-frontend:v0.1"
+      - "VIRTUAL_HOST=${BACKEND_VIRTUAL_HOST}"
+      - "VIRTUAL_PORT=${BACKEND_VIRTUAL_PORT}"
+  frontend:
+    image: "${FRONTEND_IMAGE}"
     environment:
-      - "VIRTUAL_HOST=frontend.decent.sh"
-
+      - "VIRTUAL_HOST=${FRONTEND_VIRTUAL_HOST}"
   reverseproxy:
     image: jwilder/nginx-proxy
     depends_on:
-      - myapp-frontend
-      - myapp-backend
+      - frontend
+      - backend
     ports:
-      - "80:80"
+      - 80:80
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
