@@ -5,11 +5,12 @@ services:
     environment:
       - "VIRTUAL_HOST=backend.decent.sh"
       - "VIRTUAL_PORT=8080"
-      - "VIRTUAL_PROTO=uwsgi"
+    ports:
+      - "8080:80"
   myapp-frontend:
     image: "tobiaslocker/simple-dockerized-react-frontend:v0.1"
     environment:
-      - "VIRTUAL_HOST=decent.sh"
+      - "VIRTUAL_HOST=frontend.decent.sh"
 
   reverseproxy:
     image: jwilder/nginx-proxy
