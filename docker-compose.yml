@@ -1,15 +1,21 @@
 version: '3'
 services:
+  myapp-backend:
+    image: "tobiaslocker/simple-dockerized-flask-backend:v0.1"
+    environment:
+      - "VIRTUAL_HOST=backend.decent.sh"
+      - "VIRTUAL_PORT=8080"
+      - "VIRTUAL_PROTO=uwsgi"
   myapp-frontend:
     image: "tobiaslocker/simple-dockerized-react-frontend:v0.1"
     environment:
       - "VIRTUAL_HOST=decent.sh"
-      - "VIRTUAL_PORT=80"
 
   reverseproxy:
     image: jwilder/nginx-proxy
     depends_on:
       - myapp-frontend
+      - myapp-backend
     ports:
       - "80:80"
     volumes:
