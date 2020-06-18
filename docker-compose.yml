@@ -1,14 +1,18 @@
 version: '3'
+
 services:
+
   backend:
     image: "${BACKEND_IMAGE}"
     environment:
       - "VIRTUAL_HOST=${BACKEND_VIRTUAL_HOST}"
       - "VIRTUAL_PORT=${BACKEND_VIRTUAL_PORT}"
+      
   frontend:
     image: "${FRONTEND_IMAGE}"
     environment:
       - "VIRTUAL_HOST=${FRONTEND_VIRTUAL_HOST}"
+
   reverseproxy:
     image: jwilder/nginx-proxy
     depends_on:
@@ -19,3 +23,6 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
+      - ./certs:/etc/nginx/certs
+    environment:
+      - "DEFAULT_HOST=${FRONTEND_VIRTUAL_HOST}"
