@@ -7,11 +7,27 @@ services:
     environment:
       - "VIRTUAL_HOST=${BACKEND_VIRTUAL_HOST}"
       - "VIRTUAL_PORT=${BACKEND_VIRTUAL_PORT}"
+      - "POSTGRES_USER=test"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_HOST=postgres"
+      - "POSTGRES_PORT=5432"
+      - "POSTGRES_DB=example"
+    depends_on:
+      - postgres
+    restart: always
       
   frontend:
     image: "${FRONTEND_IMAGE}"
     environment:
       - "VIRTUAL_HOST=${FRONTEND_VIRTUAL_HOST}"
+
+  postgres:
+    image: postgres:latest
+    env_file: database.conf
+    ports:
+      - 5432:5432  
+    volumes:
+      - db_volume:/var/lib/postgresql
 
   reverseproxy:
     image: jwilder/nginx-proxy
@@ -26,3 +42,6 @@ services:
       - ./certs:/etc/nginx/certs
     environment:
       - "DEFAULT_HOST=${FRONTEND_VIRTUAL_HOST}"
+
+volumes:
+  db_volume:
