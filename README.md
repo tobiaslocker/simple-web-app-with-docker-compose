@@ -15,5 +15,10 @@ BACKEND_VIRTUAL_HOST=backend.mydomain.com
 BACKEND_VIRTUAL_PORT=8080
 FRONTEND_IMAGE=tobiaslocker/simple-dockerized-react-frontend:v0.1
 FRONTEND_VIRTUAL_HOST=mydomain.com
+POSTGRES_USER=test
+POSTGRES_PASSWORD=password
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=example
 ```
-> :warning: **You need to set up backend.mydomain.com to point to the same IP as mydomain.com**
+> :warning: *You need to set up backend.mydomain.com to point to the same IP as mydomain.com*
